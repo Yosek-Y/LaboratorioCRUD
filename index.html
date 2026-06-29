@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Productos</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- CSS propio -->
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+
+    <div class="container-fluid py-4">
+
+        <div class="row g-4">
+
+            <!-- FORMULARIO -->
+
+            <div class="col-lg-4">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-header text-center">
+
+                        <h4 class="mb-0">
+                            <i class="bi bi-box-seam"></i> CRUD Productos
+                        </h4>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <form id="formProducto">
+
+                            <input type="hidden" id="id" name="id">
+
+                            <div class="mb-3">
+
+                                <label for="codigo" class="form-label">Código</label>
+
+                                <input
+                                    type="text"
+                                    id="codigo"
+                                    name="codigo"
+                                    class="form-control"
+                                    placeholder="Ejemplo: P001">
+
+                            </div>
+
+                            <div class="mb-3">
+
+                                <label for="producto" class="form-label">Producto</label>
+
+                                <input
+                                    type="text"
+                                    id="producto"
+                                    name="producto"
+                                    class="form-control"
+                                    placeholder="Nombre del producto">
+
+                            </div>
+
+                            <div class="mb-3">
+
+                                <label for="precio" class="form-label">Precio</label>
+
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    min="0.01"
+                                    id="precio"
+                                    name="precio"
+                                    class="form-control"
+                                    placeholder="0.00">
+
+                            </div>
+
+                            <div class="mb-3">
+
+                                <label for="cantidad" class="form-label">Cantidad</label>
+
+                                <input
+                                    type="number"
+                                    min="1"
+                                    id="cantidad"
+                                    name="cantidad"
+                                    class="form-control"
+                                    placeholder="Cantidad disponible">
+
+                            </div>
+
+                            <button
+                                type="submit"
+                                id="btnGuardar"
+                                class="btn btn-primary w-100 mb-2">
+
+                                <i class="bi bi-save"></i> Registrar
+
+                            </button>
+
+                            <button
+                                type="button"
+                                id="btnCancelar"
+                                class="btn btn-secondary w-100 d-none">
+
+                                Cancelar edición
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TABLA -->
+
+            <div class="col-lg-8">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+                        <h4 class="mb-0">
+                            <i class="bi bi-table"></i> Lista de Productos
+                        </h4>
+
+                        <input
+                            type="text"
+                            id="buscar"
+                            class="form-control"
+                            placeholder="Buscar por código o nombre">
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+
+                            <table class="table table-hover align-middle">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>ID</th>
+                                        <th>Código</th>
+                                        <th>Producto</th>
+                                        <th>Precio</th>
+                                        <th>Cantidad</th>
+                                        <th>Acciones</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="tablaProductos">
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>
