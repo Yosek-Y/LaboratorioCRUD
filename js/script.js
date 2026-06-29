@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         e.preventDefault();
 
+        normalizarCamposFormulario();
+
         const id = document.getElementById("id").value.trim();
         const accion = id === "" ? "Guardar" : "Modificar";
 
@@ -443,6 +445,49 @@ function limpiarFormulario() {
     btnGuardar.classList.add("btn-primary");
 
     btnCancelar.classList.add("d-none");
+
+}
+
+/**
+ * Normaliza codigo y producto antes de validar y enviar.
+ */
+function normalizarCamposFormulario() {
+
+    const inputCodigo = document.getElementById("codigo");
+    const inputProducto = document.getElementById("producto");
+
+    inputCodigo.value = sanitizarCodigo(inputCodigo.value);
+    inputProducto.value = sanitizarProducto(inputProducto.value);
+
+}
+
+/**
+ * Deja el codigo solo con letras y numeros, sin espacios ni simbolos.
+ */
+function sanitizarCodigo(valor) {
+
+    return String(valor ?? "")
+        .replace(/[^a-zA-Z0-9]/g, "")
+        .toUpperCase();
+
+}
+
+/**
+ * Deja el nombre sin simbolos, con espacios ordenados y primera letra mayuscula.
+ */
+function sanitizarProducto(valor) {
+
+    const limpio = String(valor ?? "")
+        .replace(/[^\p{L}\p{N}\s]/gu, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLocaleLowerCase("es-CO");
+
+    if (limpio === "") {
+        return "";
+    }
+
+    return limpio.charAt(0).toLocaleUpperCase("es-CO") + limpio.slice(1);
 
 }
 

@@ -87,19 +87,21 @@ class Producto
     }
 
     /**
-     * Asigna el codigo del producto limpiando espacios y caracteres HTML.
+     * Asigna el codigo del producto dejando solo letras y numeros.
      */
     public function setCodigo($codigo): void
     {
-        $this->codigo = trim(htmlspecialchars($codigo));
+        $limpio = preg_replace("/[^A-Za-z0-9]/", "", (string)$codigo);
+
+        $this->codigo = strtoupper($limpio ?? "");
     }
 
     /**
-     * Asigna el nombre del producto limpiando espacios y caracteres HTML.
+     * Asigna el nombre del producto quitando simbolos y normalizando mayusculas.
      */
     public function setProducto($producto): void
     {
-        $this->producto = trim(htmlspecialchars($producto));
+        $this->producto = self::normalizarNombreProducto((string)$producto);
     }
 
     /**
@@ -116,6 +118,56 @@ class Producto
     public function setCantidad($cantidad): void
     {
         $this->cantidad = (int)$cantidad;
+    }
+
+    /**
+     * Limpia el nombre para guardar textos como "Queso" aunque lleguen simbolos.
+     */
+    private static function normalizarNombreProducto(string $producto): string
+    {
+        $limpio = preg_replace("/[^\p{L}\p{N}\s]/u", "", $producto);
+
+        if ($limpio === null) {
+            return "";
+        }
+
+        $limpio = preg_replace("/\s+/u", " ", $limpio);
+        $limpio = trim($limpio ?? "");
+
+        if ($limpio === "") {
+            return "";
+        }
+
+        $limpio = self::textoEnMinusculas($limpio);
+
+        return self::primeraLetraMayuscula($limpio);
+    }
+
+    /**
+     * Convierte a minusculas respetando caracteres en espanol cuando mbstring existe.
+     */
+    private static function textoEnMinusculas(string $texto): string
+    {
+        if (function_exists("mb_strtolower")) {
+            return mb_strtolower($texto, "UTF-8");
+        }
+
+        return strtolower($texto);
+    }
+
+    /**
+     * Pone en mayuscula solo la primera letra del texto.
+     */
+    private static function primeraLetraMayuscula(string $texto): string
+    {
+        if (function_exists("mb_substr") && function_exists("mb_strtoupper") && function_exists("mb_strlen")) {
+            $primera = mb_substr($texto, 0, 1, "UTF-8");
+            $resto = mb_substr($texto, 1, mb_strlen($texto, "UTF-8"), "UTF-8");
+
+            return mb_strtoupper($primera, "UTF-8") . $resto;
+        }
+
+        return ucfirst($texto);
     }
 
     // ===============================
@@ -333,7 +385,7 @@ class Producto
         return DB::query(
             "SELECT *
              FROM productos
-             ORDER BY id DESC"
+             ORDER BY id ASC"
         );
     }
 }
