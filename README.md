@@ -312,7 +312,7 @@ El proyecto aplica varias medidas basicas de seguridad:
 
 ## 12. Como ejecutar el proyecto
 
-1. Copiar la carpeta `LaboratorioCRUD` dentro de `C:\xampp\htdocs\Desarrollo_7\`.
+1. Copiar la carpeta `LaboratorioCRUD` dentro de `C:\xampp\htdocs\`.
 2. Abrir XAMPP.
 3. Iniciar Apache.
 4. Iniciar MySQL.
@@ -321,7 +321,7 @@ El proyecto aplica varias medidas basicas de seguridad:
 7. Abrir el navegador en:
 
 ```text
-http://localhost/Desarrollo_7/LaboratorioCRUD/
+http://localhost/LaboratorioCRUD/
 ```
 
 ## 13. Pruebas manuales recomendadas
